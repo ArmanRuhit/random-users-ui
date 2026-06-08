@@ -6,7 +6,7 @@ A React app that fetches users from the [FreeAPI Random Users](https://api.freea
 
 ## Live demo
 
-🔗 _Add your deployed URL here after deploying (e.g. Vercel)._
+🔗 **https://random-users.apps.armanruhit.dev**
 
 ## Features
 
