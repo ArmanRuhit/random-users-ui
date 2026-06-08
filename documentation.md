@@ -69,9 +69,3 @@ The app is deployed as a **static site** through Coolify:
 3. **Static serving:** output `dist/` is served by `nginx:alpine`; "Is it a static site?" enabled, Publish Directory `/dist`.
 4. **Build Node version:** Coolify env var `NIXPACKS_NODE_VERSION=24` (build-time) — required because Vite 8 / rolldown need Node ≥ 22.12; the builder's default (22.11) is too old. The `engines` field in `package.json` documents the same requirement.
 5. **Domain & TLS:** served at `https://random-users.apps.armanruhit.dev` via a Cloudflare wildcard `*.apps` record (DNS only / grey cloud). Traefik (Coolify's proxy) terminates TLS and auto-issues a Let's Encrypt certificate over the port-80 HTTP challenge.
-
-### Deployment gotchas encountered
-
-- **Port 80 conflict:** a leftover host `nginx` (default install) held port 80, blocking Coolify's Traefik proxy. Fixed with `systemctl disable --now nginx`.
-- **Cloudflare proxy:** the `*.apps` record must be **grey cloud (DNS only)** — Cloudflare's edge proxy doesn't cover second-level wildcard subdomains and blocks the ACME challenge.
-- **Node version:** the build failed with a missing `@rolldown/binding-linux-x64-gnu` native binding because npm skipped the optional binary under the too-old default Node. Fixed by forcing Node 24 at build time.
